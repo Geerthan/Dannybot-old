@@ -9,7 +9,7 @@ client.on('ready', () => {
 	console.log('\n%s\x1b[32m%s\x1b[0m\n', 'Logged in as: ', client.user.tag); 
 
 	client.user.setPresence({ 
-		game: { name: "Under maintenance" }, 
+		game: { name: config.status }, 
 		status: "online" })
 	.then(console.log)
 	.catch(console.error);

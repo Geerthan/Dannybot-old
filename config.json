@@ -1,4 +1,5 @@
 {
 	"prefix": "!",
-	"token": "<Insert your token here>"
+	"status": "<Insert status here>",
+	"token": "<Insert token here>"
 }
