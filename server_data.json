@@ -1,0 +1,5 @@
+{
+	"serverIDs": [],
+	"dmChannelIDs": [],
+	"adminData": [ { "userID": "1", "servers": ["2"], "dmChannels": ["3"] } ]
+}

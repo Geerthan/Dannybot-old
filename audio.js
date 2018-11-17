@@ -1,6 +1,3 @@
-const bot = require("./bot.js");
-const keywords = require("./keywords.json")
-
 /*
 	Handles voice channel related processing
 */
