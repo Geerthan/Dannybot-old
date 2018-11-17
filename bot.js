@@ -24,6 +24,12 @@ client.on("guildDelete", guild => {
 	data.deleteGuildFile(guild);
 });
 
+client.on("channelDelete", channel => {
+	if(channel instanceof Discord.groupDMChannel && data.hasGroupDMInfo(channel)) {
+		data.deleteGroupDMFile(channel);
+	}
+})
+
 client.on("message", msg => {
 
 	// Group Chats outside of Guilds
