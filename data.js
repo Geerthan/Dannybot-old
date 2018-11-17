@@ -1,35 +1,41 @@
 const fs = require("fs");
+const server_data = require("./server_data.json");
 
 /*
 	Handles file input/output for storage of server and user information
 */
 
-var templateGuildFile = "templateGuildFile.txt";
-var templateGroupDMFile = "templateGroupDMFile.txt";
+var templateGuildFile = "templateGuildFile.json";
+var templateGroupDMFile = "templateGroupDMFile.json";
 
-var red = "\x1b[31m", bright = "\x1b[1m", reset = "\x1b[0m";
+var red = "\x1b[31m", blue = "\x1b[34m", bright = "\x1b[1m", reset = "\x1b[0m";
 
 exports.makeGuildFile = function(guild) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "makeGuildFile method not completed.");
-	return;
+	fs.copyFileSync("templateGuildFile.json", "servers/guild" + guild.id + ".json");
+	server_data.guildIDs.push(guild.id);
+	// Add server_data.adminData
+
+	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "New guild file with id ", guild.id, " created.");
 }
 
 exports.deleteGuildFile = function(guild) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "deleteGuildFile method not completed.");
-	return;
+	fs.unlinkSync("servers/guild" + guild.id + ".json");
+	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "Deleted guild file with id ", guild.id, ".");
 }
 
 exports.hasGroupDMInfo = function(groupDM) {
 	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "hasGroupDMInfo method not completed.");
-	return false;
 }
 
 exports.makeGroupDMFile = function(groupDM) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "makeGroupDMFile method not completed.");
-	return;
+	fs.copyFileSync("templateGroupDMFile.json", "servers/groupDM" + groupDM.id + ".json");
+	server_data.dmChannelIDs.push(groupDM.id);
+	// Add server_data.adminData
+
+	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "New group dm file with id ", groupDM.id, " created.");
 }
 
 exports.deleteGroupDMFile = function(groupDM) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "deleteGroupDMFile method not completed.");
-	return;
+	fs.unlinkSync("servers/groupDM" + groupDM.id + ".json");
+	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "Deleted group dm file with id ", groupDM.id, ".");
 }
