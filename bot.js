@@ -5,6 +5,10 @@ const config = require("./config.json");
 
 const client = new Discord.Client();
 
+/*
+	Main client setup and event handling (joining/leaving servers, messages)
+*/
+
 client.on('ready', () => {
 
 	console.log("\n\x1b[32m%s\x1b[0m%s\n", "Logged in as: ", client.user.tag); 
@@ -62,6 +66,12 @@ client.on("message", msg => {
 		// Handles custom commands
 		if (msg.content.length != 0 && msg.content[0] == '!')
 			msg.reply("Dannybot is currently unavailable.");
+
+		if(msg.content == "create")
+			data.makeGuildFile(msg.guild);
+		else if(msg.content == "delete") 
+			data.deleteGuildFile(msg.guild);
+
 	}
 
 	// Direct Messages
