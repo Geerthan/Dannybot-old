@@ -11,19 +11,23 @@ var templateGroupDMFile = "templateGroupDMFile.json";
 var red = "\x1b[31m", blue = "\x1b[34m", bright = "\x1b[1m", reset = "\x1b[0m";
 
 exports.makeGroupDMFile = function(groupDM) {
-	fs.copyFile("templateGroupDMFile.json", "servers/groupDM" + groupDM.id + ".json");
+	fs.copyFile("templateGroupDMFile.json", "servers/groupDM" + groupDM.id + ".json", error => {
+		if(error) throw error;
+	});
 	server_data.dmChannelIDs.push(groupDM.id);
 	// Add server_data.adminData
 
-	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "New group dm file with id ", groupDM.id, " created.");
+	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "Created group dm file with id ", groupDM.id, ".");
 }
 
 exports.makeGuildFile = function(guild) {
-	fs.copyFile("templateGuildFile.json", "servers/guild" + guild.id + ".json");
+	fs.copyFile("templateGuildFile.json", "servers/guild" + guild.id + ".json", error => {
+		if(error) throw error;
+	});
 	server_data.guildIDs.push(guild.id);
 	// Add server_data.adminData
 
-	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "New guild file with id ", guild.id, " created.");
+	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "Created guild file with id ", guild.id, ".");
 }
 
 exports.deleteGroupDMFile = function(groupDM) {
