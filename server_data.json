@@ -1,5 +1,5 @@
 {
-	"serverIDs": [],
+	"guildIDs": [],
 	"dmChannelIDs": [],
-	"adminData": [ { "userID": "1", "servers": ["2"], "dmChannels": ["3"] } ]
+	"adminData": [ { "userID": "1", "guildIDs": ["2"], "dmChannelIDs": ["3"] } ]
 }
