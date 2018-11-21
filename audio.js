@@ -1,3 +1,5 @@
+const data = require("./data.js");
+
 /*
 	Handles voice channel related processing
 */
@@ -14,13 +16,19 @@ exports.isInGuildCall = function(msg) {
 	return false;
 }
 
-exports.checkGroupDMKeyword = function(msgContent) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "checkGroupDMKeyword method not completed.");
+exports.checkGroupDMKeyword = function(msg) {
+	var groupDMData = data.getGroupDMKeywords(msg.channel);
+	for(var i in groupDMData) {
+		if(msg.content === groupDMData[i]) return true;
+	}
 	return false;
 }
 
-exports.checkGuildKeyword = function(msgContent) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "checkGuildKeyword method not completed.");
+exports.checkGuildKeyword = function(msg) {
+	var guildData = data.getGuildKeywords(msg.guild);
+	for(var i in guildData) {
+		if(msg.content === guildData[i]) return true;
+	}
 	return false;
 }
 
