@@ -67,11 +67,6 @@ client.on("message", msg => {
 		if (msg.content.length != 0 && msg.content[0] == '!')
 			msg.reply("Dannybot is currently unavailable.");
 
-		if(msg.content == "create")
-			data.makeGuildFile(msg.guild);
-		else if(msg.content == "delete") 
-			data.deleteGuildFile(msg.guild);
-
 	}
 
 	// Direct Messages
