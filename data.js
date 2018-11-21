@@ -40,8 +40,14 @@ exports.deleteGuildFile = function(guild) {
 	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "Deleted guild file with id ", guild.id, ".");
 }
 
-exports.hasGroupDMInfo = function(groupDM) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "hasGroupDMInfo method not completed.");
+exports.hasGroupDMFile = function(groupDM) {
+	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "hasGroupDMFile method not completed.");
+	return true;
+}
+
+exports.hasGuildFile = function(guild) {
+	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "hasGuildFile method not completed.");
+	return true;
 }
 
 exports.getGroupDMKeywords = function(groupDM) {
