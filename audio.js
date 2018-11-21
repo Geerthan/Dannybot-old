@@ -25,16 +25,18 @@ exports.isInGuildCall = function(msg) {
 
 exports.checkGroupDMKeyword = function(msg) {
 	var groupDMData = data.getGroupDMKeywords(msg.channel);
+	var lowerCaseContent = msg.content.toLowerCase();
 	for(var i in groupDMData) {
-		if(msg.content === groupDMData[i]) return true;
+		if(msg.content === groupDMData[i].toLowerCase()) return true;
 	}
 	return false;
 }
 
 exports.checkGuildKeyword = function(msg) {
 	var guildData = data.getGuildKeywords(msg.guild);
+	var lowerCaseContent = msg.content.toLowerCase();
 	for(var i in guildData) {
-		if(msg.content === guildData[i]) return true;
+		if(msg.content === guildData[i].toLowerCase()) return true;
 	}
 	return false;
 }
