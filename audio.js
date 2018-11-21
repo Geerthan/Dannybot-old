@@ -12,7 +12,14 @@ exports.isInGroupDMCall = function(msg) {
 }
 
 exports.isInGuildCall = function(msg) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "isInGuildCall method not completed.");
+	for(var i of msg.guild.channels) {
+		if(i[1].type === "voice") {
+			for(var j of i[1].members) {
+				if(msg.author.id === j[0])
+					return true;
+			}
+		} 
+	}
 	return false;
 }
 
