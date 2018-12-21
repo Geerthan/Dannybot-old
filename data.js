@@ -11,9 +11,7 @@ var templateGroupDMFile = "templateGroupDMFile.json";
 var red = "\x1b[31m", blue = "\x1b[34m", bright = "\x1b[1m", reset = "\x1b[0m";
 
 exports.makeGroupDMFile = function(groupDM) {
-	fs.copyFile("templateGroupDMFile.json", "servers/groupDM" + groupDM.id + ".json", error => {
-		if(error) throw error;
-	});
+	fs.copyFileSync("templateGroupDMFile.json", "servers/groupDM" + groupDM.id + ".json");
 	server_data.dmChannelIDs.push(groupDM.id);
 	// Add server_data.adminData
 
@@ -21,9 +19,7 @@ exports.makeGroupDMFile = function(groupDM) {
 }
 
 exports.makeGuildFile = function(guild) {
-	fs.copyFile("templateGuildFile.json", "servers/guild" + guild.id + ".json", error => {
-		if(error) throw error;
-	});
+	fs.copyFileSync("templateGuildFile.json", "servers/guild" + guild.id + ".json");
 	server_data.guildIDs.push(guild.id);
 	// Add server_data.adminData
 
@@ -31,23 +27,21 @@ exports.makeGuildFile = function(guild) {
 }
 
 exports.deleteGroupDMFile = function(groupDM) {
-	fs.unlink("servers/groupDM" + groupDM.id + ".json");
+	fs.unlinkSync("servers/groupDM" + groupDM.id + ".json");
 	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "Deleted group dm file with id ", groupDM.id, ".");
 }
 
 exports.deleteGuildFile = function(guild) {
-	fs.unlink("servers/guild" + guild.id + ".json");
+	fs.unlinkSync("servers/guild" + guild.id + ".json");
 	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "Deleted guild file with id ", guild.id, ".");
 }
 
 exports.hasGroupDMFile = function(groupDM) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "hasGroupDMFile method not completed.");
-	return true;
+	return fs.existsSync("servers/groupDM" + groupDM.id + ".json");
 }
 
 exports.hasGuildFile = function(guild) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "hasGuildFile method not completed.");
-	return true;
+	return fs.existsSync("servers/guild" + guild.id + ".json");
 }
 
 exports.getGroupDMKeywords = function(groupDM) {
