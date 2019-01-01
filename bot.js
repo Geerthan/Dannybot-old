@@ -51,6 +51,11 @@ client.on("message", msg => {
 	// Guild Channel
 	else if(msg.channel instanceof Discord.TextChannel) {
 
+		for(var i of msg.guild.members.values()) {
+			console.log(i.user.tag);
+			console.log(i.hasPermission("ADMINISTRATOR"));
+		}
+
 		if(!data.hasGuildFile(msg.guild))
 			data.makeGuildFile(msg.guild);
 

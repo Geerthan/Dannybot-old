@@ -1,5 +1,3 @@
 {
-	"guildIDs": [],
-	"dmChannelIDs": [],
-	"adminData": [ { "userID": "1", "guildIDs": ["2"], "dmChannelIDs": ["3"] } ]
+  "adminData": []
 }
