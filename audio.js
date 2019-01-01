@@ -21,8 +21,53 @@ exports.checkGuildKeyword = function(msg) {
 }
 
 exports.playGuildKeyword = function(msg) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "playGuildKeyword method not completed.");
+	var guildData = data.getGuildKeywords(msg.guild);
+	var lowerCaseContent = msg.content.toLowerCase();
+	var randN = Math.random();
+	var fileChances;
+
+	for(var i in guildData) {
+		if(msg.content === guildData[i].toLowerCase()) {
+			fileChances = data.getGuildFileChances(msg.guild)[i];
+			break;
+		}
+	}
+
+	var chosenFileIdx = 0;
+	var overallChance = 0;
+	for(var j = 1;j < fileChances.length;j++) {
+		overallChance += fileChances[j-1][1];
+		if(overallChance > randN)
+			chosenFileIdx = j;
+	}
+
+	var chosenFile = data.getGuildKeywordFiles(msg.guild)[chosenFileIdx];
+	console.log(chosenFile);
+
+	msg.member.voiceChannel.join()
+		.then(connection => {
+
+			dispatcher = connection.playFile("music/" + chosenFile);
+			dispatcher.on("end", () => {
+				connection.disconnect();
+			})
+
+		});
+
 	return;
 }
 
+exports.botPlayingKeyword = function(msg, voiceConnections) {
+	for(var connection of voiceConnections) {
+		if(msg.member.voiceChannel.guild == connection.channel.guild)
+			return true;
+	}
+	return false;
+}
 
+exports.stopGuildAudio = function(msg, voiceConnections) {
+	for(var connection of voiceConnections) {
+		if(msg.member.voiceChannel == connection.channel)
+			connection.dispatcher.end();
+	}
+}

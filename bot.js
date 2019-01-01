@@ -55,14 +55,27 @@ client.on("message", msg => {
 			data.makeGuildFile(msg.guild);
 
 		// Handles playback of keyword-triggered audio clips in voice channels
-		if(audio.isInGuildCall(msg) && audio.checkGuildKeyword(msg)) {
+		if(audio.isInGuildCall(msg) && audio.checkGuildKeyword(msg) 
+			&& !audio.botPlayingKeyword(msg, client.voiceConnections.values())) {
+
 			msg.reply("Dannybot is currently unavailable.");
-			//audio.playGuildKeyword(msg);
+			audio.playGuildKeyword(msg);
+
 		}
 
 		// Handles custom commands
-		if (msg.content.length != 0 && msg.content[0] == '!')
-			msg.reply("Dannybot is currently unavailable.");
+		if (msg.content.length != 0 && msg.content[0] == '!') {
+			switch(msg.content) {
+				case "!stop":
+					if(!audio.isInGuildCall(msg))
+						msg.reply("You must be in a call to use this command.");
+					else audio.stopGuildAudio(msg, client.voiceConnections.values());
+					break;
+
+				default:
+					msg.reply("Dannybot is currently unavailable.");
+			}
+		}
 
 	}
 
