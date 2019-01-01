@@ -51,11 +51,6 @@ client.on("message", msg => {
 	// Guild Channel
 	else if(msg.channel instanceof Discord.TextChannel) {
 
-		for(var i of msg.guild.members.values()) {
-			console.log(i.user.tag);
-			console.log(i.hasPermission("ADMINISTRATOR"));
-		}
-
 		if(!data.hasGuildFile(msg.guild))
 			data.makeGuildFile(msg.guild);
 
@@ -86,7 +81,12 @@ client.on("message", msg => {
 
 	// Direct Messages
 	else { 
-
+		if(msg.author.id !== client.user.id && data.isGuildAdmin(msg.author.id)) {
+			msg.reply("The admin panel is currently unavailable.");
+		}
+		else if(msg.author.id !== client.user.id) {
+			msg.reply("You do not have access to Dannybot's DM functions.\nPlease talk to a server administrator.");
+		}
 	}
 
 });

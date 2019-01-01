@@ -26,7 +26,7 @@ exports.makeGuildFile = function(guild) {
 		if(i.hasPermission("ADMINISTRATOR")) {
 			var userExists = false;
 			for(var j in server_data.adminData) {
-				if(server_data.adminData[j].userID == i.user.id) {
+				if(server_data.adminData[j].userID === i.user.id) {
 					userExists = true;
 					server_data.adminData[j].guildIDs.push(guild.id);
 					break;
@@ -57,7 +57,7 @@ exports.deleteGuildFile = function(guild) {
 	for(var i = 0;i < server_data.adminData.length;i++) {
 		if(server_data.adminData[i].guildIDs.includes(guild.id)) {
 			server_data.adminData[i].guildIDs.splice(server_data.adminData[i].guildIDs.indexOf(guild.id), 1);
-			if(server_data.adminData[i].guildIDs.length == 0) {
+			if(server_data.adminData[i].guildIDs.length === 0) {
 				server_data.adminData.splice(i, 1);
 				i--;
 			}
@@ -90,6 +90,12 @@ exports.getGuildFileChances = function(guild) {
 
 exports.getGuildKeywordFiles = function(guild) {
 	return getGuildData(guild).keywords.files;
+}
+
+exports.isGuildAdmin = function(id) {
+	for(var adminData of server_data.adminData)
+		if(adminData.userID === id) return true;
+	return false;
 }
 
 var getGroupDMData = function(groupDM) {
