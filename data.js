@@ -48,6 +48,14 @@ exports.getGuildKeywords = function(guild) {
 	return getGuildData(guild).keywords.keys;
 }
 
+exports.getGuildFileChances = function(guild) {
+	return getGuildData(guild).keywords.fileChances;
+}
+
+exports.getGuildKeywordFiles = function(guild) {
+	return getGuildData(guild).keywords.files;
+}
+
 var getGroupDMData = function(groupDM) {
 	return JSON.parse(fs.readFileSync("servers/groupDM" + groupDM.id + ".json"));
 }
