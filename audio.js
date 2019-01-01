@@ -7,14 +7,7 @@ const data = require("./data.js");
 var red = "\x1b[31m", bright = "\x1b[1m", reset = "\x1b[0m";
 
 exports.isInGuildCall = function(msg) {
-	for(var i of msg.guild.channels) {
-		if(i[1].type === "voice") {
-			for(var j of i[1].members) {
-				if(msg.author.id === j[0])
-					return true;
-			}
-		} 
-	}
+	if(msg.member.voiceChannel) return true;
 	return false;
 }
 
