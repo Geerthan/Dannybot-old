@@ -6,11 +6,6 @@ const data = require("./data.js");
 
 var red = "\x1b[31m", bright = "\x1b[1m", reset = "\x1b[0m";
 
-exports.isInGroupDMCall = function(msg) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "isInGroupDMCall method not completed.");
-	return false;
-}
-
 exports.isInGuildCall = function(msg) {
 	for(var i of msg.guild.channels) {
 		if(i[1].type === "voice") {
@@ -23,15 +18,6 @@ exports.isInGuildCall = function(msg) {
 	return false;
 }
 
-exports.checkGroupDMKeyword = function(msg) {
-	var groupDMData = data.getGroupDMKeywords(msg.channel);
-	var lowerCaseContent = msg.content.toLowerCase();
-	for(var i in groupDMData) {
-		if(msg.content === groupDMData[i].toLowerCase()) return true;
-	}
-	return false;
-}
-
 exports.checkGuildKeyword = function(msg) {
 	var guildData = data.getGuildKeywords(msg.guild);
 	var lowerCaseContent = msg.content.toLowerCase();
@@ -39,11 +25,6 @@ exports.checkGuildKeyword = function(msg) {
 		if(msg.content === guildData[i].toLowerCase()) return true;
 	}
 	return false;
-}
-
-exports.playGroupDMKeyword = function(msg) {
-	console.log(bright + red + "%s" + reset + "%s\n", "Error: ", "playGroupDMKeyword method not completed.");
-	return;
 }
 
 exports.playGuildKeyword = function(msg) {

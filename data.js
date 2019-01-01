@@ -44,10 +44,6 @@ exports.hasGuildFile = function(guild) {
 	return fs.existsSync("servers/guild" + guild.id + ".json");
 }
 
-exports.getGroupDMKeywords = function(groupDM) {
-	return getGroupDMData(groupDM).keywords.keys;
-}
-
 exports.getGuildKeywords = function(guild) {
 	return getGuildData(guild).keywords.keys;
 }

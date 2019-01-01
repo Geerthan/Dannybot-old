@@ -42,12 +42,6 @@ client.on("message", msg => {
 		if(!data.hasGroupDMFile(msg.channel))
 			data.makeGroupDMFile(msg.channel);
 
-		// Handles playback of keyword-triggered audio clips in voice channels
-		if(audio.isInGroupDMCall(msg) && audio.checkGroupDMKeyword(msg)) {
-			msg.reply("Dannybot is currently unavailable.");
-			//audio.playGroupDMKeyword(msg);
-		}
-
 		// Handles custom commands
 		if (msg.content.length != 0 && msg.content[0] == '!')
 			msg.reply("Dannybot is currently unavailable.");
