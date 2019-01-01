@@ -59,7 +59,7 @@ exports.playGuildKeyword = function(msg) {
 
 exports.botPlayingKeyword = function(msg, voiceConnections) {
 	for(var connection of voiceConnections) {
-		if(msg.member.voiceChannel.guild == connection.channel.guild)
+		if(msg.member.voiceChannel.guild === connection.channel.guild)
 			return true;
 	}
 	return false;
@@ -67,7 +67,7 @@ exports.botPlayingKeyword = function(msg, voiceConnections) {
 
 exports.stopGuildAudio = function(msg, voiceConnections) {
 	for(var connection of voiceConnections) {
-		if(msg.member.voiceChannel == connection.channel)
+		if(msg.member.voiceChannel === connection.channel)
 			connection.dispatcher.end();
 	}
 }
