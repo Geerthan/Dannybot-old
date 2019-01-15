@@ -91,6 +91,7 @@ client.on("message", msg => {
 						"select: The same as serverSelect\n" +
 						"```");
 					break;
+				case "serverlist":
 				case "servers":
 					var servers = data.getGuildAdminList(msg.author.id);
 					var activeServer = data.getAdminActiveServer(msg.author.id);
@@ -107,9 +108,24 @@ client.on("message", msg => {
 				case "serverselect":
 					if(msgContent.length == 2 && !isNaN(parseInt(msgContent[1]))) {
 						data.setAdminActiveServer(msg.author.id, parseInt(msgContent[1]));
-						msg.reply("Active server set to " + data.getGuildName(data.getGuildAdminList(msg.author.id)[parseInt(msgContent[1])]));
+						msg.reply("Active server set to " + data.getGuildName(data.getGuildAdminList(msg.author.id)[parseInt(msgContent[1])]) + '.');
 					}
 					else msg.reply("You need to specify the ID of the server you want to work with. Type help for details.");
+					break;
+				case "audiolist":
+				case "audio":
+					if(data.getAdminActiveServer(msg.author.id) === -1) {
+						msg.reply("You need to specify the ID of the server you want to work with. Type help for details.");
+						break;
+					}
+					var audioFiles = data.getGuildKeywordFiles(data.getGuildAdminList(msg.author.id)[data.getAdminActiveServer(msg.author.id)]);
+					var output = "```\n";
+					for(var i = 0;i < audioFiles.length;i++) {
+						output += i.toString() + ": " + audioFiles[i] + "\n";
+					}
+					if(audioFiles.length === 0) output += "There are no audio files for this server.\n";
+					output += "```";
+					msg.reply(output);
 					break;
 				default:
 					msg.reply("Command not recognized. Type help for a list of commands to use.");

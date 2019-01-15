@@ -12,7 +12,7 @@ exports.isInGuildCall = function(msg) {
 }
 
 exports.checkGuildKeyword = function(msg) {
-	var guildData = data.getGuildKeywords(msg.guild);
+	var guildData = data.getGuildKeywords(msg.guild.id);
 	var lowerCaseContent = msg.content.toLowerCase();
 	for(var i in guildData) {
 		if(msg.content === guildData[i].toLowerCase()) return true;
@@ -21,14 +21,14 @@ exports.checkGuildKeyword = function(msg) {
 }
 
 exports.playGuildKeyword = function(msg) {
-	var guildData = data.getGuildKeywords(msg.guild);
+	var guildData = data.getGuildKeywords(msg.guild.id);
 	var lowerCaseContent = msg.content.toLowerCase();
 	var randN = Math.random();
 	var fileChances;
 
 	for(var i in guildData) {
 		if(msg.content === guildData[i].toLowerCase()) {
-			fileChances = data.getGuildFileChances(msg.guild)[i];
+			fileChances = data.getGuildFileChances(msg.guild.id)[i];
 			break;
 		}
 	}
@@ -41,7 +41,7 @@ exports.playGuildKeyword = function(msg) {
 			chosenFileIdx = j;
 	}
 
-	var chosenFile = data.getGuildKeywordFiles(msg.guild)[chosenFileIdx];
+	var chosenFile = data.getGuildKeywordFiles(msg.guild.id)[chosenFileIdx];
 	console.log(chosenFile);
 
 	msg.member.voiceChannel.join()

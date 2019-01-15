@@ -82,16 +82,16 @@ exports.hasGuildFile = function(guild) {
 	return fs.existsSync("servers/guild" + guild.id + ".json");
 }
 
-exports.getGuildKeywords = function(guild) {
-	return getGuildData(guild).keywords.keys;
+exports.getGuildKeywords = function(guildID) {
+	return getGuildData(guildID).keywords.keys;
 }
 
-exports.getGuildFileChances = function(guild) {
-	return getGuildData(guild).keywords.fileChances;
+exports.getGuildFileChances = function(guildID) {
+	return getGuildData(guildID).keywords.fileChances;
 }
 
-exports.getGuildKeywordFiles = function(guild) {
-	return getGuildData(guild).keywords.files;
+exports.getGuildKeywordFiles = function(guildID) {
+	return getGuildData(guildID).keywords.files;
 }
 
 exports.isGuildAdmin = function(id) {
@@ -129,6 +129,6 @@ var getGroupDMData = function(groupDM) {
 	return JSON.parse(fs.readFileSync("servers/groupDM" + groupDM.id + ".json"));
 }
 
-var getGuildData = function(guild) {
-	return JSON.parse(fs.readFileSync("servers/guild" + guild.id + ".json"));
+var getGuildData = function(guildID) {
+	return JSON.parse(fs.readFileSync("servers/guild" + guildID + ".json"));
 }
