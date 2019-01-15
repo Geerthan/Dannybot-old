@@ -12,14 +12,11 @@ var red = "\x1b[31m", blue = "\x1b[34m", bright = "\x1b[1m", reset = "\x1b[0m";
 
 exports.makeGroupDMFile = function(groupDM) {
 	fs.copyFileSync("templateGroupDMFile.json", "servers/groupDM" + groupDM.id + ".json");
-	// Add server_data.adminData
-
 	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "Created group dm file with id ", groupDM.id, ".");
 }
 
 exports.makeGuildFile = function(guild) {
 	fs.copyFileSync("templateGuildFile.json", "servers/guild" + guild.id + ".json");
-	// Add server_data.adminData
 
 	for(var i of guild.members.values()) {
 
