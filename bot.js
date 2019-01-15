@@ -65,7 +65,7 @@ client.on("message", msg => {
 
 		// Handles custom commands
 		if (msg.content.length != 0 && msg.content[0] == '!') {
-			switch(msg.content) {
+			switch(msg.content.toLowerCase()) {
 				case "!stop":
 					if(!audio.isInGuildCall(msg))
 						msg.reply("You must be in a call to use this command.");
@@ -82,7 +82,38 @@ client.on("message", msg => {
 	// Direct Messages
 	else { 
 		if(msg.author.id !== client.user.id && data.isGuildAdmin(msg.author.id)) {
-			msg.reply("The admin panel is currently unavailable.");
+			msgContent = msg.content.split(" ");
+			switch(msgContent[0].toLowerCase()) {
+				case "help":
+					msg.reply("```\n" +
+						"servers: Provides a list of servers you have DannyBot access on.\n" +
+						"serverSelect [#]: Selects an active server to customize. Type servers to see which you can select.\n" + 
+						"select: The same as serverSelect\n" +
+						"```");
+					break;
+				case "servers":
+					var servers = data.getGuildAdminList(msg.author.id);
+					var activeServer = data.getAdminActiveServer(msg.author.id);
+					var output = "```\n";
+					for(var i = 0;i < servers.length;i++) {
+						output += i.toString() + ": " + data.getGuildName(servers[i]);
+						if(i === activeServer) output += " | <-- Active server";
+						output += "\n";
+					}
+					output += "```";
+					msg.reply(output);
+					break;
+				case "select":
+				case "serverselect":
+					if(msgContent.length == 2 && !isNaN(parseInt(msgContent[1]))) {
+						data.setAdminActiveServer(msg.author.id, parseInt(msgContent[1]));
+						msg.reply("Active server set to " + data.getGuildName(data.getGuildAdminList(msg.author.id)[parseInt(msgContent[1])]));
+					}
+					else msg.reply("You need to specify the ID of the server you want to work with. Type help for details.");
+					break;
+				default:
+					msg.reply("Command not recognized. Type help for a list of commands to use.");
+			}
 		}
 		else if(msg.author.id !== client.user.id) {
 			msg.reply("You do not have access to Dannybot's DM functions.\nPlease talk to a server administrator.");

@@ -18,6 +18,8 @@ exports.makeGroupDMFile = function(groupDM) {
 exports.makeGuildFile = function(guild) {
 	fs.copyFileSync("templateGuildFile.json", "servers/guild" + guild.id + ".json");
 
+	server_data.guildNames[guild.id] = guild.name;
+
 	for(var i of guild.members.values()) {
 
 		if(i.hasPermission("ADMINISTRATOR")) {
@@ -31,7 +33,7 @@ exports.makeGuildFile = function(guild) {
 			}
 
 			if(!userExists)
-				server_data.adminData.push({ "userID": i.user.id, "guildIDs": [guild.id] });
+				server_data.adminData.push({ "userID": i.user.id, "guildIDs": [guild.id], "activeServer": -1 });
 		}
 
 	}
@@ -51,9 +53,12 @@ exports.deleteGroupDMFile = function(groupDM) {
 exports.deleteGuildFile = function(guild) {
 	fs.unlinkSync("servers/guild" + guild.id + ".json");
 
+	delete server_data.guildNames[guild.id]; //Implement using a more efficient solution
+
 	for(var i = 0;i < server_data.adminData.length;i++) {
 		if(server_data.adminData[i].guildIDs.includes(guild.id)) {
 			server_data.adminData[i].guildIDs.splice(server_data.adminData[i].guildIDs.indexOf(guild.id), 1);
+			server_data.adminData[i].activeServer = -1;
 			if(server_data.adminData[i].guildIDs.length === 0) {
 				server_data.adminData.splice(i, 1);
 				i--;
@@ -93,6 +98,31 @@ exports.isGuildAdmin = function(id) {
 	for(var adminData of server_data.adminData)
 		if(adminData.userID === id) return true;
 	return false;
+}
+
+exports.getGuildAdminList = function(id) {
+	for(var adminData of server_data.adminData)
+		if(adminData.userID === id) return adminData.guildIDs;
+}
+
+exports.getAdminActiveServer = function(id) {
+	for(var adminData of server_data.adminData)
+		if(adminData.userID === id) return adminData.activeServer;
+}
+
+exports.setAdminActiveServer = function(id, server) {
+	for(var adminData of server_data.adminData)
+		if(adminData.userID === id) {
+			adminData.activeServer = server;
+			break;
+		}
+	fs.writeFile("server_data.json", JSON.stringify(server_data, null, 2), function(err) {
+		if(err) return console.log(err);
+	});
+}
+
+exports.getGuildName = function(guildID) {
+	return server_data.guildNames[guildID];
 }
 
 var getGroupDMData = function(groupDM) {
