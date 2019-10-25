@@ -18,7 +18,9 @@ exports.makeGroupDMFile = function(groupDM) {
 exports.makeGuildFile = function(guild) {
 	fs.copyFileSync("templateGuildFile.json", "servers/guild" + guild.id + ".json");
 
-	server_data.guildNames[guild.id] = guild.name;
+	server_data.guildNames[guild.id.toString()] = guild.name;
+
+	var guildData = getGuildData(guild.id);
 
 	for(var i of guild.members.values()) {
 
@@ -34,13 +36,19 @@ exports.makeGuildFile = function(guild) {
 
 			if(!userExists)
 				server_data.adminData.push({ "userID": i.user.id, "guildIDs": [guild.id], "activeServer": -1 });
+
+			guildData.admins.push(i.user.id);
 		}
 
 	}
 
+	console.log(JSON.stringify(server_data, null, 2));
+
 	fs.writeFile("server_data.json", JSON.stringify(server_data, null, 2), function(err) {
 		if(err) return console.log(err);
 	});
+
+	setGuildData(guild.id, guildData);
 
 	console.log(bright + blue + "%s" + reset + "%s%s%s\n", "Data: ", "Created guild file with id ", guild.id, ".");
 }
@@ -131,4 +139,10 @@ var getGroupDMData = function(groupDM) {
 
 var getGuildData = function(guildID) {
 	return JSON.parse(fs.readFileSync("servers/guild" + guildID + ".json"));
+}
+
+var setGuildData = function(guildID, data) {
+	fs.writeFile("servers/guild" + guildID + ".json", JSON.stringify(data, null, 2), function(err) {
+		if(err) return console.log(err);
+	});
 }
