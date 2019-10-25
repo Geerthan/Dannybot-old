@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const audio = require("./audio.js");
 const data = require("./data.js");
+const fnIntegration = require("./fnIntegration.js");
 const config = require("./config.json");
 
 const client = new Discord.Client();
@@ -44,7 +45,7 @@ client.on("message", msg => {
 
 		// Handles custom commands
 		if (msg.content.length != 0 && msg.content[0] == '!')
-			msg.reply("Dannybot is currently unavailable.");
+			msg.reply("I am currently unavailable.");
 
 	}
 
@@ -58,7 +59,7 @@ client.on("message", msg => {
 		if(audio.isInGuildCall(msg) && audio.checkGuildKeyword(msg) 
 			&& !audio.botPlayingKeyword(msg, client.voiceConnections.values())) {
 
-			msg.reply("Dannybot is currently unavailable.");
+			msg.reply("I am currently unavailable.");
 			audio.playGuildKeyword(msg);
 
 		}
@@ -71,6 +72,9 @@ client.on("message", msg => {
 						msg.reply("You must be in a call to use this command.");
 					else audio.stopGuildAudio(msg, client.voiceConnections.values());
 					break;
+
+				case "!fn":
+
 
 				default:
 					msg.reply("Dannybot is currently unavailable.");
@@ -86,9 +90,14 @@ client.on("message", msg => {
 			switch(msgContent[0].toLowerCase()) {
 				case "help":
 					msg.reply("```\n" +
-						"servers: Provides a list of servers you have DannyBot access on.\n" +
+						"serverList: Provides a list of servers you have DannyBot access on.\n" +
+						"servers: The same as serverList.\n" +
 						"serverSelect [#]: Selects an active server to customize. Type servers to see which you can select.\n" + 
-						"select: The same as serverSelect\n" +
+						"select [#]: The same as serverSelect.\n" +
+						"audioList: Provides a list of audio files stored for the active server.\n" +
+						"audio: The same as audioList.\n" +
+						"addKeyword: not complete\n" + 
+						"addKey: THe same as addKeyword.\n" +
 						"```");
 					break;
 				case "serverlist":
@@ -126,6 +135,10 @@ client.on("message", msg => {
 					if(audioFiles.length === 0) output += "There are no audio files for this server.\n";
 					output += "```";
 					msg.reply(output);
+					break;
+				case "addKeyword":
+				case "addKey":
+
 					break;
 				default:
 					msg.reply("Command not recognized. Type help for a list of commands to use.");
