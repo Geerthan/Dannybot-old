@@ -1,5 +1,5 @@
 {
 	"prefix": "!",
-	"status": "<Insert status here>",
-	"token": "<Insert token here>"
+	"status": "!fn",
+	"token": "your-token-here"
 }

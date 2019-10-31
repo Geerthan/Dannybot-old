@@ -102,6 +102,43 @@ exports.getGuildKeywordFiles = function(guildID) {
 	return getGuildData(guildID).keywords.files;
 }
 
+exports.getGuildFNPlayers = function(guildID) {
+	return getGuildData(guildID).fnPlayers;
+}
+
+exports.addGuildFNPlayer = function(guildID, msg, name, platform) {
+	var guildData = getGuildData(guildID);
+
+	if(guildData.fnPlayers.length == 0) {
+		guildData.fnPlayers.push({"name": name, "platform": platform});
+		msg.reply("User added");
+	}
+	else {
+		for(var i = 0; i < guildData.fnPlayers.length;i++) {
+			console.log(guildData.fnPlayers[i]);
+			if(guildData.fnPlayers[i].name.toLowerCase() === name.toLowerCase() && guildData.fnPlayers[i].platform.toLowerCase() === platform.toLowerCase())
+				continue;
+			if(i == guildData.fnPlayers.length-1) {
+				guildData.fnPlayers.push({"name": name, "platform": platform});
+				msg.reply("User added");
+			}
+		}
+	}
+	setGuildData(guildID, guildData);
+}
+
+exports.removeGuildFNPlayer = function(guildID, name, platform) {
+	var guildData = getGuildData(guildID);
+
+	for(var i = 0; i < guildData.fnPlayers.length;i++) {
+		if(guildData.fnPlayers[i].name.toLowerCase() === name.toLowerCase() && guildData.fnPlayers[i].platform.toLowerCase() === platform.toLowerCase()) {
+			guildData.fnPlayers.splice(i, 1);
+		}	
+	}
+
+	setGuildData(guildID, guildData);
+}
+
 exports.isGuildAdmin = function(id) {
 	for(var adminData of server_data.adminData)
 		if(adminData.userID === id) return true;

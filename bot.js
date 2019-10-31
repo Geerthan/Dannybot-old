@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const audio = require("./audio.js");
 const data = require("./data.js");
-//const fnIntegration = require("./fnIntegration.js");
+const fnIntegration = require("./fnIntegration.js");
 const config = require("./config.json");
 
 const client = new Discord.Client();
@@ -34,6 +34,8 @@ client.on("channelDelete", channel => {
 		data.deleteGroupDMFile(channel);
 	}
 })
+
+client.on("error", console.error); 
 
 client.on("message", msg => {
 
@@ -74,7 +76,8 @@ client.on("message", msg => {
 					break;
 
 				case "!fn":
-
+					fnIntegration.showStats(msg);
+					break;
 
 				default:
 					msg.reply("Dannybot is currently unavailable.");
@@ -97,7 +100,8 @@ client.on("message", msg => {
 						"audioList: Provides a list of audio files stored for the active server.\n" +
 						"audio: The same as audioList.\n" +
 						"addKeyword: not complete\n" + 
-						"addKey: THe same as addKeyword.\n" +
+						"addKey: The same as addKeyword.\n" +
+						"addFNPlayer: Adds a fortnite player for API polling.\n" + 
 						"```");
 					break;
 				case "serverlist":
@@ -136,9 +140,15 @@ client.on("message", msg => {
 					output += "```";
 					msg.reply(output);
 					break;
-				case "addKeyword":
-				case "addKey":
-
+				case "addkeyword":
+				case "addkey":
+					//TODO
+					break;
+				case "addfnplayer":
+					if(msgContent.length == 3) {
+						data.addGuildFNPlayer(data.getGuildAdminList(msg.author.id)[data.getAdminActiveServer(msg.author.id)], msg, msgContent[1], msgContent[2]);
+					}
+					else msg.reply("You need to specify the player name and platform.");
 					break;
 				default:
 					msg.reply("Command not recognized. Type help for a list of commands to use.");
